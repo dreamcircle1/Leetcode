@@ -1,4 +1,10 @@
-// 递归解法，超时
+解题思路：
+1.纯粹的递归
+2.递归+hashmap，以避免重复求解
+3.自底向上求解
+
+
+// 递归解法，在n=44时超时
 class Solution {
 public:
     int climbStairs(int n) {
@@ -7,6 +13,28 @@ public:
         else return climbStairs(n-1) + climbStairs(n-2);
     }
 };
+
+
+//递归+hashmap，在n=35的时候就超时了，反而比纯递归更慢了，不理解，无语
+class Solution {
+public:
+    int climbStairs(int n) {
+        if(n==1)    return 1;
+        if(n==2)    return 2;
+        unordered_map<int,int> umap;
+        if(umap.find(n) != umap.end())
+            return umap.find(n)->second; //或umap.at(n)
+        else {
+            int result=climbStairs(n-1) + climbStairs(n-2);
+            //umap.insert(make_pair(n,result));
+            //umap.insert(pair<int,int>(n,result));
+            umap[n]=result;
+            return result;
+        }
+    }
+};
+
+
 
 //自底向上求解
 class Solution {
